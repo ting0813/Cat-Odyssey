@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>貓咪圖鑑 Cat Odyssey｜品種・花色・性格・生活區域</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e6edf1;--ink:#17283a;--mute:#566b7d;--gold:#f4b63a;--teal:#2e7d7a;--card:#f7fafb;--line:#c3d1da}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+h1,h2,h3{font-family:"Noto Serif TC","Songti TC",serif;line-height:1.3;margin:0}
+nav{position:sticky;top:0;z-index:20;background:var(--ink);display:flex;gap:4px;padding:10px 16px;overflow-x:auto}
+nav a{color:#dfe9ef;text-decoration:none;padding:6px 14px;border-radius:99px;white-space:nowrap;font-size:15px}
+nav a:hover,nav a:focus-visible{background:var(--gold);color:var(--ink);outline:none}
+section{max-width:1040px;margin:0 auto;padding:64px 20px}
+h2{font-size:clamp(26px,4vw,38px);margin-bottom:8px}
+.lead{color:var(--mute);margin:0 0 28px;max-width:60ch}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+/* hero */
+#hero{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;min-height:82vh}
+#hero h1{font-size:clamp(44px,8vw,84px);font-weight:900;letter-spacing:.04em}
+#hero p{max-width:30ch;color:var(--mute);font-size:18px}
+.bubble{display:inline-block;background:var(--ink);color:#fff;padding:8px 16px;border-radius:18px 18px 18px 4px;margin-top:8px;min-width:12em}
+.stage{position:relative;text-align:center}
+#heroCat{width:min(100%,380px);margin:auto;cursor:pointer;touch-action:manipulation}
+#heroCat svg{width:100%;height:auto;display:block;transition:transform .15s}
+#heroCat:active svg{transform:scale(.96) rotate(-2deg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-size:14px}
+.chip[aria-pressed=true]{border-color:var(--ink);background:var(--gold)}
+.meter{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:14px;color:var(--mute)}
+.meter i{flex:0 0 160px;height:10px;border-radius:9px;background:var(--line);overflow:hidden}
+.meter b{display:block;height:100%;width:0;background:var(--teal);transition:width .4s}
+.ph{width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin-bottom:12px;display:block}
+.heart{position:fixed;pointer-events:none;z-index:50;font-size:22px;animation:up 1s forwards}
+@keyframes up{to{transform:translateY(-70px);opacity:0}}
+.eye{transform-box:fill-box;transform-origin:center;transition:transform .08s}
+.blink .eye{transform:scaleY(.08)}
+/* breeds */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.filters button{border:2px solid var(--ink);background:transparent;border-radius:99px;padding:3px 16px}
+.filters button[aria-pressed=true]{background:var(--ink);color:#fff}
+.breeds{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.bcard{background:var(--card);border:2px solid transparent;border-radius:14px;padding:8px 6px 10px;text-align:center}
+.bcard svg{width:84px;height:auto}
+.bcard[aria-pressed=true]{border-color:var(--ink);background:#fff;transform:translateY(-3px)}
+.bcard span{display:block;font-size:14px;font-weight:500}
+#detail{background:var(--card);border-left:6px solid var(--gold);padding:24px;position:sticky;top:72px}
+#detail .top{display:flex;gap:16px;align-items:center}
+#detail svg{width:120px;flex:none}
+#detail h3{font-size:26px}
+#detail small{color:var(--mute)}
+.stat{display:grid;grid-template-columns:5em 1fr;margin:2px 0;font-size:14px}
+.dots{letter-spacing:3px;color:var(--teal)}
+.note{background:#fff3d6;padding:8px 12px;border-radius:8px;font-size:14px;margin-top:10px}
+/* coats */
+.coats{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 14px}
+.coat{flex:none;width:96px;background:none;border:0;text-align:center;font-size:14px;padding:0}
+.coat svg{width:88px;height:auto;border-radius:50%;background:var(--card);padding:6px;border:3px solid transparent}
+.coat[aria-pressed=true] svg{border-color:var(--gold)}
+#coatInfo{background:var(--ink);color:#fff;padding:18px 22px;border-radius:14px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+#coatInfo b{font-family:"Noto Serif TC",serif;font-size:22px}
+#coatInfo p{margin:0;flex:1 1 260px}
+.btn{background:var(--gold);color:var(--ink);border:0;border-radius:99px;padding:8px 18px;font-weight:700}
+/* quiz */
+#quiz{background:var(--card);padding:28px;border-radius:16px;max-width:640px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:10px 16px;margin:8px 0}
+.opt:hover{border-color:var(--ink);background:#fff}
+.bar{height:6px;background:var(--line);border-radius:4px;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--teal);border-radius:4px;transition:width .3s}
+/* room */
+.room{position:relative;height:300px;border-radius:16px;overflow:hidden;background:linear-gradient(#cfe0e8 0 62%,#b98f68 62%)}
+.spot{position:absolute;background:rgba(255,255,255,.75);border:2px solid var(--ink);border-radius:14px;padding:4px 10px;font-size:14px}
+.spot:hover,.spot[aria-pressed=true]{background:var(--gold)}
+#roomCat{position:absolute;width:64px;transition:left .9s ease,top .9s ease;pointer-events:none}
+#roomCat svg{width:100%}
+#roomInfo{margin-top:14px;min-height:3.5em}
+.where{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:28px}
+.where div{border-top:4px solid var(--teal);padding-top:8px}
+.where h3{font-size:19px}.where p{margin:4px 0;font-size:15px;color:var(--mute)}
+/* play */
+#arena{position:relative;height:300px;border-radius:16px;background:radial-gradient(circle at 30% 30%,#fff 0,#dbe7ed 100%);overflow:hidden;cursor:crosshair;touch-action:none;user-select:none;border:2px dashed var(--line)}
+#dot{display:none;position:absolute;width:18px;height:18px;border-radius:50%;background:#e4402e;box-shadow:0 0 14px 6px rgba(228,64,46,.45);transform:translate(-50%,-50%);pointer-events:none;left:70%;top:50%}
+#pc{position:absolute;width:80px;pointer-events:none;transform:translate(-50%,-50%);left:30%;top:50%}
+#pc svg{width:100%}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+footer{text-align:center;padding:30px;color:var(--mute);font-size:14px}
+@media(max-width:780px){#hero,.breeds{grid-template-columns:1fr}#detail{position:static}#hero{min-height:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<nav aria-label="章節">
+<a href="#hero">首頁</a><a href="#breeds">品種</a><a href="#coats">花色</a><a href="#quiz-s">性格測驗</a><a href="#home">生活區域</a><a href="#play">一起玩</a>
+</nav>
+
+<section id="hero">
+<div>
+<h1>貓咪<br>圖鑑</h1>
+<p>認識品種、花色、性格與牠們的地盤。先從這隻開始，按鈕可換品種，每個品種的親密度各自累積。移動滑鼠，牠會看著你；點牠一下，牠會回應。</p>
+<div class="bubble" id="bubble" aria-live="polite">摸摸我看看？</div>
+<div class="meter"><span id="bondName">親密度</span><i><b id="bond"></b></i><span id="bondN">0</span></div>
+</div>
+<div class="stage">
+<div id="heroCat" role="button" tabindex="0" aria-label="摸摸貓咪"></div>
+<div class="chips" id="heroChips" aria-label="換花色"></div>
+</div>
+</section>
+
+<section id="breeds">
+<h2>品種圖鑑</h2>
+<p class="lead">點選一隻貓，看牠的體型、個性和飼養重點。數字是一般傾向，個體差異很大。</p>
+<div class="filters" id="filters"></div>
+<div class="breeds">
+<div class="grid" id="bgrid"></div>
+<aside id="detail" aria-live="polite"></aside>
+</div>
+</section>
+
+<section id="coats">
+<h2>花色與毛色</h2>
+<p class="lead">花色由毛色基因與花紋基因組合而成。點選一種，看牠的小知識。</p>
+<div class="coats" id="coatList"></div>
+<div id="coatInfo"></div>
+</section>
+
+<section id="quiz-s">
+<h2>哪種貓適合你？</h2>
+<p class="lead">回答四個問題，找出生活習慣最合拍的品種。</p>
+<div id="quiz"></div>
+</section>
+
+<section id="home">
+<h2>貓咪的生活區域</h2>
+<p class="lead">點房間裡的地點，貓咪會走過去，看看牠為什麼喜歡那裡。</p>
+<div class="room" id="room"><div id="roomCat"></div></div>
+<p id="roomInfo" aria-live="polite">選一個地點。</p>
+<div class="where">
+<div><h3>室內家貓</h3><p>活動範圍是整個家。垂直空間（跳台、櫃頂）比地板面積更重要。</p></div>
+<div><h3>半戶外</h3><p>陽台、庭院。需要加裝防墜網，並確認已絕育、施打疫苗。</p></div>
+<div><h3>街貓與 TNR</h3><p>街貓常出沒在騎樓、公園與店家周邊。TNR 是捕捉、絕育、回置，耳尖剪角代表已絕育。</p></div>
+</div>
+</section>
+
+<section id="play">
+<h2>跟貓咪玩</h2>
+<p class="lead">在下方區域按住滑鼠左鍵（或手指）會出現雷射紅點，貓咪會追著跑；放開紅點就消失。追到會加親密度，數值依目前選的品種分別計算。</p>
+<div id="arena"><div id="pc"></div><div id="dot"></div></div>
+<div class="row">
+<button class="btn" id="meowBtn">叫牠一聲</button>
+<button class="btn" id="treatBtn">餵零食</button>
+<span>追到 <b id="caught">0</b> 次</span>
+<span class="meter"><span id="bondName2">親密度</span><i><b id="bond2"></b></i></span>
+</div>
+</section>
+
+<footer>貓咪圖鑑 Cat Odyssey｜以 Claude 協助產生的互動式網頁｜品種資料整理自公開資料，為一般性介紹，健康問題請諮詢獸醫</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+let uid=0;
+/* ---------- 貓咪 SVG 產生器 ---------- */
+function cat(o){
+ const id='c'+(uid++),{b='#ccc',p='',c2='#444',c3='#fff',eye='#8fbf3b',fold=0,long=0}=o;
+ let pat='';
+ if(p=='tabby')pat=`<g stroke="${c2}" stroke-width="6" stroke-linecap="round" fill="none"><path d="M100 50v24M84 54l5 18M116 54l-5 18M26 105h22M28 125h20M174 105h-22M172 125h-20"/></g>`;
+ if(p=='spot')pat=`<g fill="${c2}"><circle cx="60" cy="70" r="7"/><circle cx="85" cy="55" r="6"/><circle cx="140" cy="68" r="7"/><circle cx="118" cy="52" r="6"/><circle cx="40" cy="110" r="8"/><circle cx="160" cy="112" r="8"/><circle cx="100" cy="66" r="5"/></g>`;
+ if(p=='calico')pat=`<circle cx="52" cy="78" r="36" fill="${c2}"/><circle cx="152" cy="74" r="34" fill="${c3}"/><circle cx="150" cy="160" r="22" fill="${c2}"/>`;
+ if(p=='tortie')pat=`<g fill="${c2}"><circle cx="56" cy="76" r="26"/><circle cx="140" cy="64" r="18"/><circle cx="160" cy="118" r="24"/><circle cx="84" cy="150" r="16"/><circle cx="112" cy="90" r="12"/></g>`;
+ if(p=='points')pat=`<ellipse cx="100" cy="128" rx="44" ry="36" fill="${c2}" opacity=".92"/>`;
+ if(p=='tux')pat=`<path d="M100 56L86 122Q100 136 114 122Z" fill="${c3}"/><ellipse cx="100" cy="152" rx="42" ry="26" fill="${c3}"/>`;
+ if(p=='cow')pat=`<circle cx="56" cy="78" r="34" fill="${c2}"/><circle cx="150" cy="100" r="26" fill="${c2}"/>`;
+ if(p=='shade')pat=`<ellipse cx="100" cy="68" rx="72" ry="30" fill="${c2}" opacity=".28"/>`;
+ const earC=p=='points'?c2:b;
+ const ears=fold?`<path d="M30 82Q22 48 62 50L82 64Z" fill="${earC}"/><path d="M170 82Q178 48 138 50L118 64Z" fill="${earC}"/>`
+  :`<path d="M28 84L36 14L88 52Z" fill="${earC}"/><path d="M172 84L164 14L112 52Z" fill="${earC}"/><path d="M42 66L45 34L68 52Z" fill="#e9a3a3"/><path d="M158 66L155 34L132 52Z" fill="#e9a3a3"/>`;
+ const ruff=long?`<ellipse cx="100" cy="150" rx="88" ry="38" fill="${b}"/>`:'';
+ const eyeP=x=>`<g class="eye"><ellipse cx="${x}" cy="108" rx="13" ry="13" fill="${eye}"/><ellipse class="pu" cx="${x}" cy="108" rx="5" ry="11" fill="#111"/><circle cx="${x-3}" cy="103" r="3" fill="#fff"/></g>`;
+ return `<svg viewBox="0 0 200 190" role="img" aria-label="貓咪"><defs><clipPath id="${id}"><ellipse cx="100" cy="112" rx="76" ry="66"/></clipPath></defs>${ruff}${ears}<ellipse cx="100" cy="112" rx="76" ry="66" fill="${b}"/><g clip-path="url(#${id})">${pat}</g>${eyeP(68)}${eyeP(132)}<path d="M92 128h16l-8 9z" fill="#e58a8a"/><path d="M100 137v6M100 143q-9 8-18 2M100 143q9 8 18 2" stroke="#3a2a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M58 138l-42-8M58 146l-42 4M142 138l42-8M142 146l42 4" stroke="#6b7a88" stroke-width="1.6" opacity=".7"/></svg>`;
+}
+/* ---------- 資料 ---------- */
+const coats=[
+{n:'橘貓',o:{b:'#ee9a45',p:'tabby',c2:'#c8661f',eye:'#d9a21b'},f:'橘貓約八成是公貓，因為橘色基因位在 X 染色體上。牠們身上其實都帶有虎斑紋。'},
+{n:'黑貓',o:{b:'#26262b',eye:'#e0b020'},f:'黑毛在長期曝曬後可能透出暗褐色，稱為「鏽化」。'},
+{n:'白貓',o:{b:'#f4f4f0',eye:'#5aa7d8'},f:'全白又藍眼的貓，先天聽力受損的機率較高，需要多留意。'},
+{n:'棕虎斑',o:{b:'#9a8566',p:'tabby',c2:'#3d3328',eye:'#7fb23a'},f:'額頭上的 M 形斑紋是虎斑貓共有的記號，也是台灣最常見的花色之一。'},
+{n:'三花貓',o:{b:'#f6f3ee',p:'calico',c2:'#ee9a45',c3:'#2a2a2e',eye:'#7fb23a'},f:'三花貓幾乎都是母貓；公三花很罕見，通常帶有額外的性染色體。'},
+{n:'玳瑁貓',o:{b:'#2b2b2f',p:'tortie',c2:'#d9803a',eye:'#d9a21b'},f:'黑與橘交織、沒有大片白色。同樣因為 X 染色體的關係，絕大多數是母貓。'},
+{n:'賓士貓',o:{b:'#26262b',p:'tux',c3:'#f4f4f0',eye:'#8fbf3b'},f:'黑白相間，像穿著小禮服，國外稱為 tuxedo cat。'},
+{n:'乳牛貓',o:{b:'#f4f4f0',p:'cow',c2:'#26262b',eye:'#e0b020'},f:'黑白斑塊的位置和大小每隻都不同，像指紋一樣獨一無二。'},
+{n:'重點色',o:{b:'#efe6d6',p:'points',c2:'#5b4636',eye:'#4a90d9'},f:'深色集中在耳朵、臉、四肢和尾巴，因為這些部位體溫較低，色素才會顯現。'},
+{n:'藍（灰）貓',o:{b:'#9aa5b1',p:'shade',c2:'#4a5560',eye:'#e0a020'},f:'愛貓人口中的「藍」其實是黑色被稀釋後的灰色，英短、俄羅斯藍貓最具代表。'}];
+const breeds=[
+{n:'米克斯（家貓）',en:'Domestic shorthair',type:'短毛',o:coats[3].o,orig:'台灣常見',w:'3–6 kg',life:'12–18 年',s:[3,3,3,2],d:'台灣最常見的貓，個性、花色五花八門。基因多元，通常體質強健。',note:'領養代替購買，是很好的選擇。'},
+{n:'英國短毛貓',en:'British Shorthair',type:'短毛',o:{b:'#8f9cab',p:'shade',c2:'#4a5560',eye:'#e0a020'},orig:'英國',w:'4–8 kg',life:'12–17 年',s:[2,2,3,2],d:'「五短」身形（耳、頸、尾、四肢、被毛都短），圓臉、毛厚如絨毯，個性沉穩獨立，不太喜歡被抱著。',note:'容易發胖，要控制飲食與增加運動。'},
+{n:'布偶貓',en:'Ragdoll',type:'長毛',o:{b:'#f1e8da',p:'points',c2:'#6a5445',eye:'#4a90d9',long:1},orig:'美國',w:'4.5–9 kg',life:'12–17 年',s:[2,5,4,4],d:'體型大、性情溫柔，常跟著主人在家裡移動。',note:'長毛需要每天梳理，也要定期做心臟檢查。'},
+{n:'緬因貓',en:'Maine Coon',type:'長毛',o:{b:'#8d7352',p:'tabby',c2:'#3a2e22',eye:'#d9a21b',long:1},orig:'美國',w:'5–11 kg',life:'12–15 年',s:[4,4,4,4],d:'最大型的家貓品種之一，耳尖有山貓般的簇毛，聰明、親人、聲音輕柔，有「溫柔巨人」之稱。',note:'需要寬敞空間與堅固的跳台。'},
+{n:'暹羅貓',en:'Siamese',type:'短毛',o:{b:'#efe3cd',p:'points',c2:'#4a3a30',eye:'#4a90d9'},orig:'泰國',w:'3–5.5 kg',life:'12–20 年',s:[5,5,2,2],d:'話多又黏人，會用叫聲跟你「聊天」，也需要大量陪伴。',note:'獨處太久容易焦慮。'},
+{n:'波斯貓',en:'Persian',type:'長毛',o:{b:'#f4f1ec',eye:'#e0a020',long:1},orig:'伊朗地區',w:'3.5–7 kg',life:'12–17 年',s:[1,3,5,5],d:'扁臉長毛，個性安靜優雅，偏好平靜的環境。',note:'需天天梳毛、清潔眼周；扁臉品種呼吸道要注意。'},
+{n:'蘇格蘭摺耳貓',en:'Scottish Fold',type:'短毛',o:{b:'#a3adb8',p:'shade',c2:'#58626d',eye:'#e0a020',fold:1},orig:'蘇格蘭',w:'3–6 kg',life:'11–15 年',s:[2,4,3,3],d:'耳朵向前摺，圓臉大眼，個性溫和。',note:'摺耳基因與軟骨、關節病變有關，購買前務必了解健康風險。'},
+{n:'孟加拉貓',en:'Bengal',type:'短毛',o:{b:'#d89a4a',p:'spot',c2:'#5a3a1a',eye:'#7fb23a'},orig:'美國',w:'4–7 kg',life:'12–16 年',s:[5,3,2,3],d:'身上有豹紋，精力旺盛、愛爬高，有些還愛玩水。',note:'需要大量遊戲，否則會自己找事做（拆家）。'},
+{n:'美國短毛貓',en:'American Shorthair',type:'短毛',o:{b:'#b5b9bd',p:'tabby',c2:'#3a3f45',eye:'#7fb23a'},orig:'美國',w:'3.5–7 kg',life:'13–20 年',s:[3,2,3,2],d:'源自早期的工作貓，體格強壯均衡，最經典的是銀虎斑。親人、靈活但不黏人，學習力強。',note:'狩獵本能強，對移動的東西反應熱烈，適合用逗貓棒玩；也要留意體重。'}];
+const lab=['活潑','黏人','掉毛','照顧'];
+const dots=n=>'●'.repeat(n)+'○'.repeat(5-n);
+/* ---------- 聲音與親密度 ---------- */
+let ac,bond=0;
+function meow(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(520,t);o.frequency.linearRampToValueAtTime(900,t+.18);o.frequency.linearRampToValueAtTime(440,t+.5);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,t+.08);g.gain.exponentialRampToValueAtTime(.0001,t+.55);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.6)}catch(e){}}
+function addBond(n){bonds[heroKey]=Math.min(100,(bonds[heroKey]||0)+n);showBond()}
+function heart(x,y,ch='❤'){const h=document.createElement('span');h.className='heart';h.textContent=ch;h.style.left=x+'px';h.style.top=y+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1000)}
+/* ---------- 首頁互動 ---------- */
+const hero=$('#heroCat'),bonds={};let heroO,heroKey;
+const MSG=n=>n<1?'摸摸我看看？':n<5?'呼嚕…':n<10?'好舒服，再摸一下':'你已經是我的專屬鏟屎官了';
+const short=n=>n.replace('（家貓）','');
+function showBond(){const v=bonds[heroKey]||0;$('#bond').style.width=v+'%';$('#bond2').style.width=v+'%';$('#bondN').textContent=v;$('#bondName').textContent=$('#bondName2').textContent='親密度（'+heroKey+'）'}
+function setHero(o,key){heroO=o;heroKey=key;hero.innerHTML=cat(o);$('#pc').innerHTML=cat(o);showBond();$('#bubble').textContent=MSG(Math.floor((bonds[key]||0)/3))}
+breeds.forEach((b,i)=>{const e=document.createElement('button');e.className='chip';e.textContent=short(b.n);e.setAttribute('aria-pressed',i==0);e.onclick=()=>{setHero(b.o,short(b.n));document.querySelectorAll('#heroChips .chip').forEach(x=>x.setAttribute('aria-pressed',x==e))};$('#heroChips').appendChild(e)});
+setHero(breeds[0].o,short(breeds[0].n));
+document.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect(),vx=e.clientX-(r.left+r.width/2),vy=e.clientY-(r.top+r.height/2),l=Math.hypot(vx,vy)||1,k=Math.min(l,220)/220*5;hero.querySelectorAll('.pu').forEach(p=>p.style.transform=`translate(${vx/l*k}px,${vy/l*k}px)`)});
+setInterval(()=>{const s=hero.querySelector('svg');if(!s)return;s.classList.add('blink');setTimeout(()=>s.classList.remove('blink'),140)},3200);
+function pet(e){addBond(3);meow();const r=hero.getBoundingClientRect();heart(e.clientX||r.left+r.width/2,e.clientY||r.top+r.height/2);$('#bubble').textContent=MSG(Math.floor(bonds[heroKey]/3))}
+hero.onclick=pet;hero.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pet({})}};
+/* ---------- 品種 ---------- */
+let flt='全部',cur=0;
+function drawBreeds(){
+ $('#filters').innerHTML=['全部','短毛','長毛'].map(f=>`<button aria-pressed="${f==flt}" data-f="${f}">${f}</button>`).join('');
+ $('#filters').querySelectorAll('button').forEach(b=>b.onclick=()=>{flt=b.dataset.f;drawBreeds()});
+ $('#bgrid').innerHTML='';
+ breeds.forEach((b,i)=>{if(flt!='全部'&&b.type!=flt)return;const e=document.createElement('button');e.className='bcard';e.setAttribute('aria-pressed',i==cur);e.innerHTML=cat(b.o)+`<span>${b.n.replace('（家貓）','')}</span>`;e.onclick=()=>{cur=i;drawBreeds()};$('#bgrid').appendChild(e)});
+ const b=breeds[cur];
+ $('#detail').innerHTML=`<img class="ph" src="img/${b.en.toLowerCase().replace(/ /g,'-')}.jpg" alt="${b.n}" onerror="this.remove()"><div class="top">${cat(b.o)}<div><h3>${b.n}</h3><small>${b.en}｜${b.orig}｜${b.type}</small></div></div><p>${b.d}</p>`+b.s.map((v,i)=>`<div class="stat"><span>${lab[i]}</span><span class="dots" aria-label="${v}/5">${dots(v)}</span></div>`).join('')+`<p style="font-size:14px;color:var(--mute);margin:8px 0 0">體重 ${b.w}｜壽命約 ${b.life}</p><div class="note">${b.note}</div>`;
+}
+drawBreeds();
+/* ---------- 花色 ---------- */
+let cc=0;
+function drawCoats(){
+ $('#coatList').innerHTML='';
+ coats.forEach((c,i)=>{const e=document.createElement('button');e.className='coat';e.setAttribute('aria-pressed',i==cc);e.innerHTML=cat(c.o)+c.n;e.onclick=()=>{cc=i;drawCoats()};$('#coatList').appendChild(e)});
+ const c=coats[cc];$('#coatInfo').innerHTML=`<b>${c.n}</b><p>${c.f}</p><button class="btn" id="applyC">讓首頁的貓換上</button>`;
+ $('#applyC').onclick=()=>{setHero(c.o,c.n);document.querySelectorAll('#heroChips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));location.hash='#hero'};
+}
+drawCoats();
+/* ---------- 測驗 ---------- */
+// 順序：米克斯, 英短, 布偶, 緬因, 暹羅, 波斯, 摺耳, 孟加拉, 美短
+const Q=[
+{q:'週末你比較想怎麼過？',a:[['窩在沙發追劇',[0,2,2,1,0,2,2,0,0]],['出門走走',[2,0,0,1,1,0,0,2,1]],['在家活動筋骨',[1,0,0,1,2,0,0,3,2]]]},
+{q:'你在家的時間有多長？',a:[['幾乎都在家',[0,0,2,1,3,1,1,0,0]],['晚上才回家',[2,3,0,1,0,1,1,1,2]],['時間不固定',[2,2,1,1,0,0,1,1,2]]]},
+{q:'你願意花多少時間幫貓梳毛？',a:[['每天都可以',[0,0,2,2,0,3,0,0,0]],['每週一兩次',[1,2,1,1,1,0,2,1,2]],['越少越好',[2,1,0,0,2,0,1,1,2]]]},
+{q:'你理想中的貓咪個性？',a:[['愛聊天、黏人',[0,0,1,0,3,0,0,1,0]],['溫柔安靜',[0,1,3,1,0,2,2,0,1]],['獨立自在',[2,3,0,0,0,1,1,0,2]],['聰明好動',[0,0,0,2,1,0,0,3,3]]]}];
+let qi=0,sc=Array(breeds.length).fill(0);
+function drawQ(){
+ const box=$('#quiz');
+ if(qi<Q.length){const q=Q[qi];box.innerHTML=`<div class="bar"><i style="width:${qi/Q.length*100}%"></i></div><h3>${q.q}</h3>`+q.a.map((a,i)=>`<button class="opt" data-i="${i}">${a[0]}</button>`).join('');
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{Q[qi].a[b.dataset.i][1].forEach((v,i)=>sc[i]+=v);qi++;drawQ()})}
+ else{const i=sc.indexOf(Math.max(...sc)),b=breeds[i];box.innerHTML=`<div class="bar"><i style="width:100%"></i></div><div class="top" style="display:flex;gap:16px;align-items:center"><div style="width:110px;flex:none">${cat(b.o)}</div><div><h3>${b.n}</h3><p style="margin:4px 0">${b.d}</p></div></div><div class="note">${b.note}</div><div class="row"><button class="btn" id="view">看詳細資料</button><button class="btn" id="redo" style="background:var(--bg)">重新測驗</button></div>`;
+  $('#view').onclick=()=>{cur=i;flt='全部';drawBreeds();location.hash='#breeds'};$('#redo').onclick=()=>{qi=0;sc.fill(0);drawQ()}}
+}
+drawQ();
+/* ---------- 房間 ---------- */
+const spots=[
+{k:'window',n:'🪟 窗台',x:6,y:8,cx:12,cy:34,t:'窗台是貓咪的電視：能看鳥、看車、曬太陽。陽光的暖度也讓牠們放鬆。'},
+{k:'cat-tree',n:'🧗 貓跳台',x:70,y:6,cx:76,cy:30,t:'貓是領域型動物，站得高能掌握全局，覺得安全。多層跳台能增加地盤。'},
+{k:'box',n:'📦 紙箱',x:6,y:70,cx:14,cy:60,t:'狹小包覆的空間讓貓咪有安全感，也能保暖。這是牠們躲藏與伏擊的天性。'},
+{k:'bowl',n:'🍽️ 飯碗',x:42,y:76,cx:44,cy:64,t:'飯碗與水碗最好分開放，水碗離食物遠一點，貓咪會更願意喝水。'},
+{k:'litter',n:'🚽 貓砂盆',x:72,y:72,cx:78,cy:62,t:'貓砂盆要放在安靜、不被打擾的地方，數量建議是貓數加一。'}];
+$('#roomCat').innerHTML=cat(coats[0].o);
+const rc=$('#roomCat');rc.style.left='44%';rc.style.top='40%';
+spots.forEach(s=>{const b=document.createElement('button');b.className='spot';b.textContent=s.n;b.style.left=s.x+'%';b.style.top=s.y+'%';b.setAttribute('aria-pressed','false');
+ b.onclick=()=>{rc.style.left=s.cx+'%';rc.style.top=s.cy+'%';$('#roomInfo').innerHTML=`<img class="ph" src="img/${s.k}.jpg" alt="${s.n}" onerror="this.remove()">`+s.t;document.querySelectorAll('.spot').forEach(x=>x.setAttribute('aria-pressed',x==b));meow()};$('#room').appendChild(b)});
+/* ---------- 逗貓 ---------- */
+const ar=$('#arena'),dot=$('#dot'),pc=$('#pc');
+let mx=.7,my=.5,px=.3,py=.5,caught=0,cool=0;
+function mv(e){const r=ar.getBoundingClientRect();mx=Math.max(.04,Math.min(.96,(e.clientX-r.left)/r.width));my=Math.max(.06,Math.min(.94,(e.clientY-r.top)/r.height));dot.style.left=mx*100+'%';dot.style.top=my*100+'%'}
+let held=false;ar.addEventListener('pointermove',e=>{if(held)mv(e)});ar.addEventListener('pointerdown',e=>{held=true;dot.style.display='block';try{ar.setPointerCapture(e.pointerId)}catch(_){}mv(e)});const rel=()=>{held=false;dot.style.display='none'};ar.addEventListener('pointerup',rel);ar.addEventListener('pointercancel',rel);
+function loop(){const r=ar.getBoundingClientRect();if(held){px+=(mx-px)*.06;py+=(my-py)*.06}pc.style.left=px*100+'%';pc.style.top=py*100+'%';
+ const d=Math.hypot((mx-px)*r.width,(my-py)*r.height);
+ pc.querySelectorAll('.pu').forEach(p=>p.style.transform=`translate(${held?Math.sign(mx-px)*3:0}px,${held?Math.sign(my-py)*3:0}px)`);
+ if(held&&d<28&&Date.now()>cool){cool=Date.now()+900;caught++;$('#caught').textContent=caught;addBond(4);meow();heart(r.left+px*r.width,r.top+py*r.height-30,'⭐')}
+ requestAnimationFrame(loop)}
+loop();
+$('#meowBtn').onclick=meow;
+$('#treatBtn').onclick=e=>{const r=e.target.getBoundingClientRect();addBond(6);heart(r.left+20,r.top-10,'🐟');meow()};
+</script>
+</body>
+</html>
